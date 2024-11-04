@@ -15,7 +15,7 @@
 
     <div id="sortable" class="row sortable">
         @foreach ($characters as $character)
-            <div class="col-md-3 col-6 text-center mb-2" data-id="{{ $character->id }}">
+            <div class="col-md-3 col-6 text-center mb-2" draggable="true" data-id="{{ $character->id }}">
                 <div>
                     <a href="{{ $character->url }}"><img src="{{ $character->image->thumbnailUrl }}" class="img-thumbnail" alt="Thumbnail for {{ $character->fullName }}" /></a>
                 </div>
@@ -31,6 +31,7 @@
     {!! Form::close() !!}
 @endsection
 @section('scripts')
+@include('js._dragdroptouch_js')
     <script>
         $(document).ready(function() {
             $("#sortable").sortable({
