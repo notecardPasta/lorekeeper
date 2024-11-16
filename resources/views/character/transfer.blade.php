@@ -42,6 +42,8 @@
             </div>
         @elseif($character->trade_id)
             <p>This character is currently attached to a trade. (<a href="{{ $character->trade->url }}">View Trade</a>)</p>
+        @elseif($character->is_locked)
+            <p>This character is currently locked! Unlock it via its <a href="{{ $character->url . '/profile/edit'}}">edit profile page.</a></p>						
         @else
             <p>
                 Transfers require the recipient to confirm that they want to receive the character. Before the recipient makes the confirmation, you may cancel the transfer, but cannot retrieve the character after it has been transferred.
