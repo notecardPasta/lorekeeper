@@ -82,8 +82,8 @@ class AddSiteSettings extends Command {
         $this->addSiteSetting('deactivated_key', 0, 'Optional key to view the deactivated list. Enter "0" to not require one.');
 
         $this->addSiteSetting('comment_dislikes_enabled', 0, '0: Dislikes disabled, 1: Dislikes enabled.');
-	
-        $this->addSiteSetting('lock_cooldown', 0, 'Number of days to add to the cooldown timer when a character is locked.');	
+
+        $this->addSiteSetting('lock_cooldown', 0, 'Number of days to add to the cooldown timer when a character is locked.');
 
         $this->line("\nSite settings up to date!");
     }

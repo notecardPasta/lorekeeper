@@ -19,7 +19,7 @@ class AddIsLockedToCharactersTable extends Migration {
      */
     public function down() {
         Schema::table('characters', function (Blueprint $table) {
-           $table->dropColumn('is_locked');
+            $table->dropColumn('is_locked');
         });
     }
 }

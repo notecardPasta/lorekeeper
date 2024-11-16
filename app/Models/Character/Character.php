@@ -277,6 +277,7 @@ class Character extends Model {
         if ($this->is_locked) {
             return false;
         }
+
         return true;
     }
 
