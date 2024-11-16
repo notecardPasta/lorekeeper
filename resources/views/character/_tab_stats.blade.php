@@ -23,12 +23,12 @@
 
 
 @if ($character->is_locked)
-	<h5>
-		<i class="fas fa-lock fa-fw mr-2"></i> This character is locked!
-	</h5>
-	<p> This character cannot be transferred until unlocked regardless of the statuses below. </p>
-	<hr />	
-@endif	
+    <h5>
+        <i class="fas fa-lock fa-fw mr-2"></i> This character is locked!
+    </h5>
+    <p> This character cannot be transferred until unlocked regardless of the statuses below. </p>
+    <hr />
+@endif
 <h5>
     <i class="text-{{ $character->is_giftable ? 'success far fa-circle' : 'danger fas fa-times' }} fa-fw mr-2"></i> {{ $character->is_giftable ? 'Can' : 'Cannot' }} be gifted
 </h5>
