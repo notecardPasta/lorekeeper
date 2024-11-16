@@ -612,4 +612,61 @@ class CharacterController extends Controller {
 
         return redirect()->back();
     }
+
+    /**
+     * Gets a character's lock modal.
+     *
+     * @param string $slug
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function getLockCharacter($slug) {
+        if (!Auth::check()) {
+            abort(404);
+        }
+
+        $isMod = Auth::user()->hasPower('manage_characters');
+        $isOwner = ($this->character->user_id == Auth::user()->id);
+        if (!$isMod && !$isOwner) {
+            abort(404);
+        }
+
+        return view('character._lock_character', [
+            'character'    => $this->character,
+			'lockcooldown' => Settings::get('lock_cooldown'),
+        ]);
+    }
+
+    /**
+     * Edits a character's lock status.
+     *
+     * @param App\Services\CharacterManager $service
+     * @param string                        $slug
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function postLockCharacter(Request $request, CharacterManager $service, $slug) {
+        if (!Auth::check()) {
+            abort(404);
+        }
+
+        $isMod = Auth::user()->hasPower('manage_characters');
+        $isOwner = ($this->character->user_id == Auth::user()->id);
+        if (!$isMod && !$isOwner) {
+            abort(404);
+        }
+
+        $request->validate(CharacterProfile::$rules);
+
+        if ($service->updateCharacterLock($request->only(['is_locked']), $this->character, Auth::user(), !$isOwner)) {
+            flash('Character updated successfully.')->success();
+        } else {
+            foreach ($service->errors()->getMessages()['error'] as $error) {
+                flash($error)->error();
+            }
+        }
+
+        return redirect()->back();
+    }
+	
 }

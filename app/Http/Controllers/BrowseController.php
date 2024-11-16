@@ -185,13 +185,13 @@ class BrowseController extends Controller {
             $query->where('is_trading', 1);
         }
         if ($request->get('is_sellable')) {
-            $query->where('is_sellable', 1);
+            $query->where('is_sellable', 1)->where('is_locked', 0);
         }
         if ($request->get('is_tradeable')) {
-            $query->where('is_tradeable', 1);
+            $query->where('is_tradeable', 1)->where('is_locked', 0);
         }
         if ($request->get('is_giftable')) {
-            $query->where('is_giftable', 1);
+            $query->where('is_giftable', 1)->where('is_locked', 0);
         }
 
         if ($request->get('owner')) {

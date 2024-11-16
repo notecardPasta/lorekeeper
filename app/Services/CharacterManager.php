@@ -2051,4 +2051,57 @@ class CharacterManager extends Service {
 
         return $result;
     }
+	
+    /**
+     * Updates a character's lock status.
+     *
+     * @param array                           $data
+     * @param \App\Models\Character\Character $character
+     * @param \App\Models\User\User           $user
+     * @param bool                            $isAdmin
+     *
+     * @return bool
+     */
+    public function updateCharacterLock($data, $character, $user, $isAdmin = false) {
+        DB::beginTransaction();
+
+        try {
+            // Allow updating the lock status if the editing
+            // user owns the character
+            if (!$isAdmin) {
+                if ($character->user_id != $user->id) {
+                    throw new \Exception('You cannot edit this character.');
+                }
+            } else {
+                if (!$this->logAdminAction($user, 'Updated Character Lock', 'Updated character lock status on '.$character->displayname)) {
+                    throw new \Exception('Failed to log admin action.');
+                }
+            }
+
+                $character->is_locked = isset($data['is_locked']);
+				$character->is_trading = 0;
+				
+				if (isset($data['is_locked'])) {
+					$cooldown = Settings::get('lock_cooldown');
+					$character->transferrable_at = Carbon::now()->addDays($cooldown);		
+				}
+				
+                $character->save();
+
+            if ($isAdmin && isset($data['alert_user']) && $character->is_visible && $character->user_id) {
+                Notifications::create('CHARACTER_PROFILE_EDIT', $character->user, [
+                    'character_name' => $character->name,
+                    'character_slug' => $character->is_myo_slot ? $character->id : $character->slug,
+                    'sender_url'     => $user->url,
+                    'sender_name'    => $user->name,
+                ]);
+            }
+
+            return $this->commitReturn(true);
+        } catch (\Exception $e) {
+            $this->setError('error', $e->getMessage());
+        }
+
+        return $this->rollbackReturn(false);
+    }	
 }

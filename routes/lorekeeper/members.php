@@ -112,6 +112,9 @@ Route::group(['prefix' => 'character', 'namespace' => 'Characters'], function ()
 
     Route::post('{slug}/approval', 'CharacterController@postCharacterApproval');
     Route::get('{slug}/approval', 'CharacterController@getCharacterApproval');
+
+    Route::get('{slug}/lock', 'CharacterController@getLockCharacter');
+    Route::post('{slug}/lock', 'CharacterController@postLockCharacter');	
 });
 Route::group(['prefix' => 'myo', 'namespace' => 'Characters'], function () {
     Route::get('{id}/profile/edit', 'MyoController@getEditCharacterProfile');

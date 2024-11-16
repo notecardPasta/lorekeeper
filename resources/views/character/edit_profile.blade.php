@@ -60,16 +60,33 @@
                 </div>
             </div>
         @endif
-        @if ($character->is_tradeable || $character->is_sellable)
-            <div class="form-group disabled">
-                {!! Form::checkbox('is_trading', 1, $character->is_trading, ['class' => 'form-check-input', 'data-toggle' => 'toggle']) !!}
-                {!! Form::label('is_trading', 'Up For Trade', ['class' => 'form-check-label ml-3']) !!} {!! add_help('This will place the character on the list of characters that are currently up for trade. This does not have any other functionality, but allow users looking for trades to find your character easily.') !!}
-            </div>
-        @else
-            <div class="alert alert-secondary">Cannot be set to "Up for Trade" as character cannot be traded or sold.</div>
-        @endif
-    @endif
+		@if (!$character->is_locked)		
+			@if ($character->is_tradeable || $character->is_sellable)
+				<div class="form-group disabled">
+					{!! Form::checkbox('is_trading', 1, $character->is_trading, ['class' => 'form-check-input', 'data-toggle' => 'toggle']) !!}
+					{!! Form::label('is_trading', 'Up For Trade', ['class' => 'form-check-label ml-3']) !!} {!! add_help('This will place the character on the list of characters that are currently up for trade. This does not have any other functionality, but allow users looking for trades to find your character easily.') !!}
+				</div>
+			@else
+				<div class="alert alert-secondary">Cannot be set to "Up for Trade" as character cannot be traded or sold.</div>
+			@endif
+		    <div class="form-group">
+			    <a href="#" class="btn btn-outline-danger lock-character-button"><i class="fas fa-lock"></i> Lock Character</a>
+		    </div>		
+		@else
+			@if ($character->transferrable_at && $character->transferrable_at->isFuture())
+				<div class="alert alert-secondary"><i class="far fa-times-circle"></i> <i class="fas fa-lock"></i> Cannot be unlocked til cooldown is over at {!! format_date($character->transferrable_at) !!}.</div>  
+			@else
+				<div class="alert alert-secondary">Cannot be set to "Up for Trade" as character is locked.</div>
+				<div class="form-group">
+					<a href="#" class="btn btn-outline-success lock-character-button"><i class="fas fa-lock"></i> Unlock Character</a>
+				</div>
+			@endif	
+		@endif	
+	@endif	
     @if ($character->user_id != Auth::user()->id)
+		<div class="form-group">
+			<a href="#" class="btn btn-outline-info lock-character-button"><i class="fas fa-lock"></i> Admin Lock/Unlock Character</a>
+		</div>		
         <div class="form-group">
             {!! Form::checkbox('alert_user', 1, true, ['class' => 'form-check-input', 'data-toggle' => 'toggle', 'data-onstyle' => 'danger']) !!}
             {!! Form::label('alert_user', 'Notify User', ['class' => 'form-check-label ml-3']) !!} {!! add_help('This will send a notification to the user that their character profile has been edited. A notification will not be sent if the character is not visible.') !!}
@@ -80,4 +97,16 @@
     </div>
     {!! Form::close() !!}
 
+@endsection
+
+@section('scripts')
+    @parent
+    <script>
+        $(document).ready(function() {
+            $('.lock-character-button').on('click', function(e) {
+                e.preventDefault();
+                loadModal("{{ url('character') }}/{{ $character->slug}}/lock", 'Lock/Unlock Character');
+            });
+        });
+    </script>
 @endsection

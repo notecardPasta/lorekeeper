@@ -32,7 +32,7 @@ class Character extends Model {
         'is_sellable', 'is_tradeable', 'is_giftable',
         'sale_value', 'transferrable_at', 'is_visible',
         'is_gift_art_allowed', 'is_gift_writing_allowed', 'is_trading', 'sort',
-        'is_myo_slot', 'name', 'trade_id', 'owner_url',
+        'is_myo_slot', 'name', 'trade_id', 'owner_url', 'is_locked',
     ];
 
     /**
@@ -247,7 +247,7 @@ class Character extends Model {
      */
     public function scopeTradable($query) {
         return $query->where(function ($query) {
-            $query->whereNull('transferrable_at')->orWhere('transferrable_at', '<', Carbon::now());
+            $query->where('is_locked', 0)->whereNull('transferrable_at')->orWhere('transferrable_at', '<', Carbon::now());
         })->where(function ($query) {
             $query->where('is_sellable', 1)->orWhere('is_tradeable', 1)->orWhere('is_giftable', 1);
         });
@@ -274,7 +274,9 @@ class Character extends Model {
         if (CharacterTransfer::active()->where('character_id', $this->id)->exists()) {
             return false;
         }
-
+        if ($this->is_locked) {
+            return false;
+        }
         return true;
     }
 
