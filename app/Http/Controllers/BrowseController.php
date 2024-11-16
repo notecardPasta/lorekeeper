@@ -6,6 +6,7 @@ use App\Facades\Settings;
 use App\Models\Character\Character;
 use App\Models\Character\CharacterCategory;
 use App\Models\Character\CharacterImage;
+use App\Models\Feature\CharacterFeature;
 use App\Models\Character\Sublist;
 use App\Models\Feature\Feature;
 use App\Models\Rank\Rank;
@@ -251,6 +252,9 @@ class BrowseController extends Controller {
                 $query->where('url', 'LIKE', '%'.$designerUrl.'%');
             });
         }
+		if ($request->get('tsearch')) {
+            $imageQuery->whereRelation('features.feature', 'features.name', 'LIKE', '%'.$request->get('tsearch').'%')->orWhereRelation('features.feature', 'character_features.data', 'LIKE', '%'.$request->get('tsearch').'%');
+        }		
 
         $query->whereIn('id', $imageQuery->pluck('character_id')->toArray());
 

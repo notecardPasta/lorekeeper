@@ -5,6 +5,10 @@
             {!! Form::label('name', 'Character Name/Code: ', ['class' => 'mr-2']) !!}
             {!! Form::text('name', Request::get('name'), ['class' => 'form-control']) !!}
         </div>
+		<div class="form-group mr-3 mb-3">
+            {!! Form::label('tsearch', 'Search Trait: ', ['class' => 'mr-2']) !!}
+            {!! Form::text('tsearch', Request::get('tsearch'), ['class' => 'form-control']) !!}
+        </div>		
         <div class="form-group mb-3 mr-1">
             {!! Form::select('rarity_id', $rarities, Request::get('rarity_id'), ['class' => 'form-control mr-2']) !!}
         </div>
