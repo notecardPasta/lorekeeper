@@ -252,7 +252,7 @@ class BrowseController extends Controller {
             });
         }
         if ($request->get('tsearch')) {
-            $imageQuery->whereRelation('features.feature', 'features.name', 'LIKE', '%'.$request->get('tsearch').'%')->orWhereRelation('features.feature', 'character_features.data', 'LIKE', '%'.$request->get('tsearch').'%');
+            $imageQuery->whereRelation('features.feature', 'features.name', 'LIKE', '%'.$request->get('tsearch').'%');
         }
 
         $query->whereIn('id', $imageQuery->pluck('character_id')->toArray());
