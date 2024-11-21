@@ -274,9 +274,6 @@ class Character extends Model {
         if (CharacterTransfer::active()->where('character_id', $this->id)->exists()) {
             return false;
         }
-        if ($this->is_locked) {
-            return false;
-        }
 
         return true;
     }
