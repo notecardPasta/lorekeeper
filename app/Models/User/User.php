@@ -68,6 +68,15 @@ class User extends Authenticatable implements MustVerifyEmail {
     ];
 
     /**
+     * The relationships that should always be loaded.
+     *
+     * @var array
+     */
+    protected $with = [
+        'rank',
+    ];
+
+    /**
      * Whether the model contains timestamps to be saved and updated.
      *
      * @var string
@@ -367,7 +376,7 @@ class User extends Authenticatable implements MustVerifyEmail {
             return '(Unverified)';
         }
 
-        return $this->primaryAlias->displayAlias;
+        return $this->primaryAlias?->displayAlias ?? '(No Alias)';
     }
 
     /**
