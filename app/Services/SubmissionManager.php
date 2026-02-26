@@ -66,15 +66,7 @@ class SubmissionManager extends Service {
                 if ($prompt->limit) {
                     // check that the user hasn't hit the prompt submission limit
                     // filter the submissions by hour/day/week/etc and count
-                    $count['all'] = Submission::submitted($prompt->id, $user->id)->count();
-                    $count['Hour'] = Submission::submitted($prompt->id, $user->id)->where('created_at', '>=', now()->startOfHour())->count();
-                    $count['Day'] = Submission::submitted($prompt->id, $user->id)->where('created_at', '>=', now()->startOfDay())->count();
-                    $count['Week'] = Submission::submitted($prompt->id, $user->id)->where('created_at', '>=', now()->startOfWeek())->count();
-                    $count['BiWeekly'] = Submission::submitted($prompt->id, $user->id)->where('created_at', '>=', now()->subWeeks(2))->count();
-                    $count['Month'] = Submission::submitted($prompt->id, $user->id)->where('created_at', '>=', now()->startOfMonth())->count();
-                    $count['BiMonthly'] = Submission::submitted($prompt->id, $user->id)->where('created_at', '>=', now()->subMonths(2))->count();
-                    $count['Quarter'] = Submission::submitted($prompt->id, $user->id)->where('created_at', '>=', now()->subMonths(3))->count();
-                    $count['Year'] = Submission::submitted($prompt->id, $user->id)->where('created_at', '>=', now()->startOfYear())->count();
+                    $count = $prompt->filterCount($user);
 
                     // if limit by character is on... multiply by # of chars. otherwise, don't
                     if ($prompt->limit_character) {
@@ -173,15 +165,7 @@ class SubmissionManager extends Service {
                 if ($prompt->limit && !($submission->status == 'Draft' && $submission->prompt_id && $submission->staff_comments)) {
                     // check that the user hasn't hit the prompt submission limit
                     // filter the submissions by hour/day/week/etc and count
-                    $count['all'] = Submission::submitted($prompt->id, $user->id)->count();
-                    $count['Hour'] = Submission::submitted($prompt->id, $user->id)->where('created_at', '>=', now()->startOfHour())->count();
-                    $count['Day'] = Submission::submitted($prompt->id, $user->id)->where('created_at', '>=', now()->startOfDay())->count();
-                    $count['Week'] = Submission::submitted($prompt->id, $user->id)->where('created_at', '>=', now()->startOfWeek())->count();
-                    $count['BiWeekly'] = Submission::submitted($prompt->id, $user->id)->where('created_at', '>=', now()->subWeeks(2))->count();
-                    $count['Month'] = Submission::submitted($prompt->id, $user->id)->where('created_at', '>=', now()->startOfMonth())->count();
-                    $count['BiMonthly'] = Submission::submitted($prompt->id, $user->id)->where('created_at', '>=', now()->subMonths(2))->count();
-                    $count['Quarter'] = Submission::submitted($prompt->id, $user->id)->where('created_at', '>=', now()->subMonths(3))->count();
-                    $count['Year'] = Submission::submitted($prompt->id, $user->id)->where('created_at', '>=', now()->startOfYear())->count();
+                    $count = $prompt->filterCount($user);
 
                     // if limit by character is on... multiply by # of chars. otherwise, don't
                     if ($prompt->limit_character) {

@@ -4,7 +4,9 @@ namespace App\Models\Prompt;
 
 use App\Models\Model;
 use App\Models\Reward\Reward;
+use App\Models\Submission\Submission;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class Prompt extends Model {
     /**
@@ -84,6 +86,31 @@ class Prompt extends Model {
         return $this->morphMany(Reward::class, 'object', 'object_model', 'object_id');
     }
 
+    /**
+     * Get an array of how many prompts the user has completed in general.
+     *
+     * @param mixed $user
+     *
+     * @return array
+     */
+    public function filterCount($user) {
+        if (Auth::check()) {
+            // filter the submissions by hour/day/week/etc and returns count
+            $count['all'] = Submission::submitted($this->id, $user->id)->count();
+            $count['Hour'] = Submission::submitted($this->id, $user->id)->where('created_at', '>=', now()->startOfHour())->count();
+            $count['Day'] = Submission::submitted($this->id, $user->id)->where('created_at', '>=', now()->startOfDay())->count();
+            $count['Week'] = Submission::submitted($this->id, $user->id)->where('created_at', '>=', now()->startOfWeek())->count();
+            $count['BiWeekly'] = Submission::submitted($this->id, $user->id)->where('created_at', '>=', now()->subWeeks(2))->count();
+            $count['Month'] = Submission::submitted($this->id, $user->id)->where('created_at', '>=', now()->startOfMonth())->count();
+            $count['BiMonthly'] = Submission::submitted($this->id, $user->id)->where('created_at', '>=', now()->subMonths(2))->count();
+            $count['Quarter'] = Submission::submitted($this->id, $user->id)->where('created_at', '>=', now()->subMonths(3))->count();
+            $count['Year'] = Submission::submitted($this->id, $user->id)->where('created_at', '>=', now()->startOfYear())->count();
+        } else {
+            $count = null;
+        }
+
+        return $count;
+    }
     /**********************************************************************************************
 
         SCOPES
