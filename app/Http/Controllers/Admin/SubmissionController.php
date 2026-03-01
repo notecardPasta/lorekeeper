@@ -86,7 +86,7 @@ class SubmissionController extends Controller {
             'currencies'          => Currency::where('is_user_owned', 1)->orderBy('name')->pluck('name', 'id'),
             'tables'              => LootTable::orderBy('name')->pluck('name', 'id'),
             'raffles'             => Raffle::where('rolled_at', null)->where('is_active', 1)->orderBy('name')->pluck('name', 'id'),
-            'count'               => $prompt->filterCount($submission->user),
+            'count'               => $prompt->getCount($submission->user),
             'limit'               => $limit,
         ] : []));
     }

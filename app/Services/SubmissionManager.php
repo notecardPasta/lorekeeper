@@ -66,7 +66,7 @@ class SubmissionManager extends Service {
                 if ($prompt->limit) {
                     // check that the user hasn't hit the prompt submission limit
                     // filter the submissions by hour/day/week/etc and count
-                    $count = $prompt->filterCount($user);
+                    $count = $prompt->getCount($user);
 
                     // if limit by character is on... multiply by # of chars. otherwise, don't
                     if ($prompt->limit_character) {
@@ -165,7 +165,7 @@ class SubmissionManager extends Service {
                 if ($prompt->limit && !($submission->status == 'Draft' && $submission->prompt_id && $submission->staff_comments)) {
                     // check that the user hasn't hit the prompt submission limit
                     // filter the submissions by hour/day/week/etc and count
-                    $count = $prompt->filterCount($user);
+                    $count = $prompt->getCount($user);
 
                     // if limit by character is on... multiply by # of chars. otherwise, don't
                     if ($prompt->limit_character) {

@@ -218,7 +218,7 @@ class SubmissionController extends Controller {
 
         return view('home._prompt', [
             'prompt' => $prompt,
-            'count'  => $prompt->filterCount(Auth::user()),
+            'count'  => $prompt->getCount(Auth::user()),
             'limit'  => $limit,
         ]);
     }

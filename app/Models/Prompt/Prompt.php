@@ -92,7 +92,7 @@ class Prompt extends Model {
      *
      * @return array
      */
-    public function filterCount($user) {
+    public function getCount($user) {
         // filter the submissions by hour/day/week/etc and returns count
         $count['all'] = Submission::submitted($this->id, $user->id)->count();
         $count['Hour'] = Submission::submitted($this->id, $user->id)->where('created_at', '>=', now()->startOfHour())->count();
