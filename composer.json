@@ -23,6 +23,7 @@
         "laravel/tinker": "^2.0",
         "laravelcollective/html": "^6.0",
         "socialiteproviders/deviantart": "^4.2",
+        "socialiteproviders/discord": "^4.1",
         "socialiteproviders/imgur": "^4.1",
         "socialiteproviders/instagram": "^5.0",
         "socialiteproviders/tumblr": "^4.1",
