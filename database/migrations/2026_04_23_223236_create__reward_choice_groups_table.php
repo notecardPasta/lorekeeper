@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('_reward_choice_groups', function (Blueprint $table) {
+        Schema::create('reward_choice_groups', function (Blueprint $table) {
             $table->id();
             $table->string('name'); 
             $table->boolean('is_character')->default(1);                         
