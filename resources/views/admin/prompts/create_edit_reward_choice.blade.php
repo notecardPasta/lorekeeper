@@ -20,7 +20,7 @@
     {!! Form::open(['url' => $group->id ? 'admin/data/reward-choices/edit/' . $group->id : 'admin/data/reward-choices/create', 'files' => true]) !!}
 
     <h3>Basic Information</h3>
-<p>The name and description of this choice will appear in the prompt submission area. Keep short!</p>
+    <p>The name and description of this choice will appear in the prompt submission area. Keep short!</p>
     <div class="form-group">
         {!! Form::label('Name') !!}
         {!! Form::text('name', $group->name, ['class' => 'form-control']) !!}
@@ -33,22 +33,20 @@
 
 
 
-   @if ($group->id)
+    @if ($group->id)
+        <h3>Group Loots</h3>
+        <p>Every row here will be rewarded to the character! Note that currently loot tables are rolled on the <b>first character</b> themself, though I will be adding more functionality later. Loot that cannot be held in a character's inventory goes to
+            the <b>owner's</b> inventory, not the submitter's due to how LK's loot rewarding works atm.</b></p>
 
-    <h3>Group Loots</h3>
-    <p>Every row here will be rewarded to the character! Note that currently loot tables are rolled on the <b>first character</b> themself, though I will be adding more functionality later. Loot that cannot be held in a character's inventory goes to the <b>owner's</b> inventory, not the submitter's due to how LK's loot rewarding works atm.</b></p>
+        @include('widgets._loot_select', ['loots' => $group->choices, 'showLootTables' => true, 'showRaffles' => true])
 
-    @include('widgets._loot_select', ['loots' => $group->choices, 'showLootTables' => true, 'showRaffles' => true])
+        <div class="text-right">
+            {!! Form::submit($group->id ? 'Edit' : 'Create', ['class' => 'btn btn-primary']) !!}
+        </div>
 
-    <div class="text-right">
-        {!! Form::submit($group->id ? 'Edit' : 'Create', ['class' => 'btn btn-primary']) !!}
-    </div>
+        {!! Form::close() !!}
 
-    {!! Form::close() !!}
-
-    @include('widgets._loot_select_row', ['showLootTables' => true, 'showRaffles' => true])
-
-
+        @include('widgets._loot_select_row', ['showLootTables' => true, 'showRaffles' => true])
     @endif
 
 
@@ -59,7 +57,7 @@
         <h3>Preview</h3>
         <div class="card mb-3">
             <div class="card-body">
-              Preview here, create widget later
+                Preview here, create widget later
             </div>
         </div>
     @endif

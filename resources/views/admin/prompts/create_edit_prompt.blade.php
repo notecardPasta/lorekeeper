@@ -118,7 +118,7 @@
     <h3>Reward Description</h3>
     <p>Auto-populates in front of the rewards area as well as on the submit prompt page for users to read. Can be used to give instructions or more details about rewards.</p>
     <div class="form-group">
-        {!! Form::label('Reward Description (Optional)') !!} 
+        {!! Form::label('Reward Description (Optional)') !!}
         {!! Form::textarea('reward_description', $prompt->reward_description, ['class' => 'form-control wysiwyg']) !!}
     </div>
 
