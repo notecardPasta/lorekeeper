@@ -40,13 +40,13 @@
 
         @include('widgets._loot_select', ['loots' => $group->choices, 'showLootTables' => true, 'showRaffles' => true])
     @endif
-        <div class="text-right">
-            {!! Form::submit($group->id ? 'Edit' : 'Create', ['class' => 'btn btn-primary']) !!}
-        </div>
+    <div class="text-right">
+        {!! Form::submit($group->id ? 'Edit' : 'Create', ['class' => 'btn btn-primary']) !!}
+    </div>
 
-        {!! Form::close() !!}
+    {!! Form::close() !!}
 
-        @include('widgets._loot_select_row', ['showLootTables' => true, 'showRaffles' => true])
+    @include('widgets._loot_select_row', ['showLootTables' => true, 'showRaffles' => true])
 
 
 

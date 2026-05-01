@@ -115,23 +115,24 @@
     @include('widgets._loot_select', ['loots' => $prompt->rewards, 'showLootTables' => true, 'showRaffles' => true])
 
     <h3>Reward Choices</h3>
-    <p>Reward <i>choices</i> are options you can offer the user to select from the <a href="/admin/data/reward-choices">Choice Groups</a> list. Users can only select one group out of the ones below, but <b>all</b> loot within a selected group is rolled.</p>
+    <p>Reward <i>choices</i> are options you can offer the user to select from the <a href="/admin/data/reward-choices">Choice Groups</a> list. Users can only select one group out of the ones below, but <b>all</b> loot within a selected group is rolled.
+    </p>
     <p>Selected choices are currently rolled on the first character applied to a submission.</p>
-        <div class="form-group">
-            <div><a href="#" class="btn btn-primary mb-2" id="add-choice">Add Choice Group</a></div>
-            <div id="choiceList">
-                {{-- Add in the ones that currently exist --}}
-                @if ($prompt->reward_choices)
-                    @foreach ($prompt->reward_choices as $choice)
-                        <div class="mb-2 d-flex">
-                            {!! Form::select('reward_choice_id[]', $reward_groups, $choice->reward_choice_group_id, ['class' => 'form-control mr-2 initial choice-select', 'placeholder' => 'Select Choice Group']) !!}
-                            <a href="#" class="remove-choice btn btn-danger mb-2">×</a>
-                        </div>
-                    @endforeach
-                @endif
-            </div>
+    <div class="form-group">
+        <div><a href="#" class="btn btn-primary mb-2" id="add-choice">Add Choice Group</a></div>
+        <div id="choiceList">
+            {{-- Add in the ones that currently exist --}}
+            @if ($prompt->reward_choices)
+                @foreach ($prompt->reward_choices as $choice)
+                    <div class="mb-2 d-flex">
+                        {!! Form::select('reward_choice_id[]', $reward_groups, $choice->reward_choice_group_id, ['class' => 'form-control mr-2 initial choice-select', 'placeholder' => 'Select Choice Group']) !!}
+                        <a href="#" class="remove-choice btn btn-danger mb-2">×</a>
+                    </div>
+                @endforeach
+            @endif
         </div>
-</div>
+    </div>
+    </div>
     <h3>Reward Description</h3>
     <p>Auto-populates in front of the rewards area as well as on the submit prompt page for users to read. Can be used to give instructions or more details about rewards.</p>
     <div class="form-group">
@@ -144,10 +145,10 @@
     </div>
 
     {!! Form::close() !!}
-            <div class="choice-row hide mb-2">
-                {!! Form::select('reward_choice_id[]', $reward_groups, null, ['class' => 'form-control mr-2  choice-select', 'placeholder' => 'Select Choice Group']) !!}
-                <a href="#" class="remove-choice btn btn-danger mb-2">×</a>
-            </div>
+    <div class="choice-row hide mb-2">
+        {!! Form::select('reward_choice_id[]', $reward_groups, null, ['class' => 'form-control mr-2  choice-select', 'placeholder' => 'Select Choice Group']) !!}
+        <a href="#" class="remove-choice btn btn-danger mb-2">×</a>
+    </div>
     @include('widgets._loot_select_row', ['showLootTables' => true, 'showRaffles' => true])
 
     @if ($prompt->id)
@@ -173,33 +174,33 @@
 
             $('.initial.choice-select').selectize();
 
-        $('#add-choice').on('click', function(e) {
-            e.preventDefault();
-            addChoiceRow();
-        });
-        $('.remove-choice').on('click', function(e) {
-            e.preventDefault();
-            removeChoiceRow($(this));
-        })
-
-        function addChoiceRow() {
-            var $clone = $('.choice-row').clone();
-            $('#choiceList').append($clone);
-            $clone.removeClass('hide choice-row');
-            $clone.addClass('d-flex');
-            $clone.find('.remove-choice').on('click', function(e) {
+            $('#add-choice').on('click', function(e) {
+                e.preventDefault();
+                addChoiceRow();
+            });
+            $('.remove-choice').on('click', function(e) {
                 e.preventDefault();
                 removeChoiceRow($(this));
             })
+
+            function addChoiceRow() {
+                var $clone = $('.choice-row').clone();
+                $('#choiceList').append($clone);
+                $clone.removeClass('hide choice-row');
+                $clone.addClass('d-flex');
+                $clone.find('.remove-choice').on('click', function(e) {
+                    e.preventDefault();
+                    removeChoiceRow($(this));
+                })
                 $clone.find('.choice-select').selectize();
 
-        }
+            }
 
-        function removeChoiceRow($trigger) {
-            $trigger.parent().remove();
-        }
+            function removeChoiceRow($trigger) {
+                $trigger.parent().remove();
+            }
 
-            
+
         });
     </script>
 @endsection
