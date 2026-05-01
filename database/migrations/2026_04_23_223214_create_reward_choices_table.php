@@ -12,9 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('reward_choices', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');             
-            $table->tinyText('description');             
+            $table->id();             
             $table->integer('choice_group_id')->unsigned()->default(0);
             $table->string('rewardable_type');
             $table->integer('rewardable_id')->unsigned();

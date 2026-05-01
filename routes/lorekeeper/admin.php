@@ -238,6 +238,15 @@ Route::group(['prefix' => 'data', 'namespace' => 'Data', 'middleware' => 'power:
     Route::post('prompts/create', 'PromptController@postCreateEditPrompt');
     Route::post('prompts/edit/{id?}', 'PromptController@postCreateEditPrompt');
     Route::post('prompts/delete/{id}', 'PromptController@postDeletePrompt');
+
+    Route::get('reward-choices', 'RewardChoiceController@getIndex');
+    Route::get('reward-choices/create', 'RewardChoiceController@getCreateRewardChoice');
+    Route::get('reward-choices/edit/{id}', 'RewardChoiceController@getEditRewardChoice');
+    Route::get('reward-choices/delete/{id}', 'RewardChoiceController@getDeleteRewardChoice');
+    Route::post('reward-choices/create', 'RewardChoiceController@postCreateEditRewardChoice');
+    Route::post('reward-choices/edit/{id?}', 'RewardChoiceController@postCreateEditRewardChoice');
+    Route::post('reward-choices/delete/{id}', 'RewardChoiceController@postDeleteRewardChoice');
+    Route::post('reward-choices/sort', 'RewardChoiceController@postSortRewardChoice');    
 });
 
 // PAGES

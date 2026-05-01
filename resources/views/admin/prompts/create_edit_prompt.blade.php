@@ -114,6 +114,14 @@
     <p>You can add loot tables containing any kind of currencies (both user- and character-attached), but be sure to keep track of which are being distributed! Character-only currencies cannot be given to users.</p>
     @include('widgets._loot_select', ['loots' => $prompt->rewards, 'showLootTables' => true, 'showRaffles' => true])
 
+
+    <h3>Reward Description</h3>
+    <p>Auto-populates in front of the rewards area as well as on the submit prompt page for users to read. Can be used to give instructions or more details about rewards.</p>
+    <div class="form-group">
+        {!! Form::label('Reward Description (Optional)') !!} 
+        {!! Form::textarea('reward_description', $prompt->reward_description, ['class' => 'form-control wysiwyg']) !!}
+    </div>
+
     <div class="text-right">
         {!! Form::submit($prompt->id ? 'Edit' : 'Create', ['class' => 'btn btn-primary']) !!}
     </div>

@@ -8,6 +8,11 @@
             @endif
         @else
             <p>These are the default rewards for this prompt. The actual rewards you receive may be edited by a staff member during the approval process.</p>
+            
+          @if ($prompt->reward_description)
+            {!! $prompt->reward_description !!}
+         @endif             
+            
             @if ($count)
                 <p>You have completed this prompt <strong>{{ $count }}</strong> time{{ $count == 1 ? '' : 's' }}.</p>
             @endif
@@ -30,3 +35,6 @@
         </table>
     </div>
 </div>
+
+
+

@@ -14,7 +14,7 @@ class Prompt extends Model {
     protected $fillable = [
         'prompt_category_id', 'name', 'summary', 'description', 'parsed_description', 'is_active',
         'start_at', 'end_at', 'hide_before_start', 'hide_after_end', 'has_image', 'prefix',
-        'hide_submissions', 'staff_only', 'hash',
+        'hide_submissions', 'staff_only', 'hash', 'reward_description'
     ];
 
     /**
@@ -46,6 +46,7 @@ class Prompt extends Model {
         'summary'            => 'nullable',
         'description'        => 'nullable',
         'image'              => 'mimes:png',
+        'reward_description'        => 'nullable',        
     ];
 
     /**
@@ -60,6 +61,7 @@ class Prompt extends Model {
         'summary'            => 'nullable',
         'description'        => 'nullable',
         'image'              => 'mimes:png',
+        'reward_description'        => 'nullable',        
     ];
 
     /**********************************************************************************************
@@ -82,6 +84,12 @@ class Prompt extends Model {
         return $this->hasMany(PromptReward::class, 'prompt_id');
     }
 
+    /**
+     * Get the reward choices attached to this prompt.
+     */
+    public function reward_choices() {
+        return $this->hasMany(PromptRewardChoices::class, 'prompt_id');
+    }
     /**********************************************************************************************
 
         SCOPES
