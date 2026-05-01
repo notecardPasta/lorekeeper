@@ -20,7 +20,6 @@
                 @foreach ($groups as $group)
                     <tr>
                         <td>
-                            <a class="fas fa-arrows-alt-v handle mr-3" href="#"></a>
                             {!! $group->name !!}
                         </td>
                         <td class="text-right">

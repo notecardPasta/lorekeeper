@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Prompt\Prompt;
 use App\Models\Prompt\PromptCategory;
 use App\Models\Prompt\PromptReward;
+use App\Models\Prompt\PromptRewardChoices;
 use App\Models\Submission\Submission;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
@@ -210,6 +211,7 @@ class PromptService extends Service {
 
             $this->populateRewards(Arr::only($data, ['rewardable_type', 'rewardable_id', 'quantity']), $prompt);
 
+            $this->populateRewardChoices(Arr::only($data, ['reward_choice_id']), $prompt);
             return $this->commitReturn($prompt);
         } catch (\Exception $e) {
             $this->setError('error', $e->getMessage());
@@ -267,7 +269,7 @@ class PromptService extends Service {
             }
 
             $this->populateRewards(Arr::only($data, ['rewardable_type', 'rewardable_id', 'quantity']), $prompt);
-
+            $this->populateRewardChoices(Arr::only($data, ['reward_choice_id']), $prompt);
             return $this->commitReturn($prompt);
         } catch (\Exception $e) {
             $this->setError('error', $e->getMessage());
@@ -386,6 +388,26 @@ class PromptService extends Service {
                     'rewardable_type' => $type,
                     'rewardable_id'   => $data['rewardable_id'][$key],
                     'quantity'        => $data['quantity'][$key],
+                ]);
+            }
+        }
+    }
+
+        /**
+     * Processes user input for creating/updating prompt rewards.
+     *
+     * @param array  $data
+     * @param Prompt $prompt
+     */
+    private function populateRewardChoices($data, $prompt) {
+        // Clear the old rewards...
+        $prompt->reward_choices()->delete();
+
+        if (isset($data['reward_choice_id'])) {
+            foreach ($data['reward_choice_id'] as $key => $id) {
+                PromptRewardChoices::create([
+                    'prompt_id'       => $prompt->id,
+                    'reward_choice_group_id' => $id,
                 ]);
             }
         }

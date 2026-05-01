@@ -39,7 +39,7 @@
             the <b>owner's</b> inventory, not the submitter's due to how LK's loot rewarding works atm.</b></p>
 
         @include('widgets._loot_select', ['loots' => $group->choices, 'showLootTables' => true, 'showRaffles' => true])
-
+    @endif
         <div class="text-right">
             {!! Form::submit($group->id ? 'Edit' : 'Create', ['class' => 'btn btn-primary']) !!}
         </div>
@@ -47,11 +47,9 @@
         {!! Form::close() !!}
 
         @include('widgets._loot_select_row', ['showLootTables' => true, 'showRaffles' => true])
-    @endif
 
 
 
-    {!! Form::close() !!}
 
     @if ($group->id)
         <h3>Preview</h3>
