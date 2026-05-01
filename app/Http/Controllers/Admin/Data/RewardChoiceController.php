@@ -28,6 +28,7 @@ class RewardChoiceController extends Controller {
             'groups' => RewardChoiceGroup::get(),
         ]);
     }
+
     /**
      * Shows the create reward choice group page.
      *
@@ -61,7 +62,7 @@ class RewardChoiceController extends Controller {
      * Creates or edits a reward choice group.
      *
      * @param App\Services\RewardChoiceService $service
-     * @param int|null                   $id
+     * @param int|null                         $id
      *
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -104,7 +105,7 @@ class RewardChoiceController extends Controller {
      * Deletes a prompt category.
      *
      * @param App\Services\RewardChoiceService $service
-     * @param int                        $id
+     * @param int                              $id
      *
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -118,5 +119,5 @@ class RewardChoiceController extends Controller {
         }
 
         return redirect()->to('admin/data/prompt-categories');
-    }    
+    }
 }

@@ -3,10 +3,9 @@
 namespace App\Services;
 
 use App\Models\Prompt\Prompt;
+use App\Models\Prompt\PromptRewardChoices;
 use App\Models\Prompt\RewardChoiceGroup;
 use App\Models\Prompt\RewardChoices;
-use App\Models\Prompt\PromptRewardChoices;
-use App\Models\Submission\Submission;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
@@ -53,7 +52,7 @@ class RewardChoiceService extends Service {
     /**
      * Update a reward choice gorup.
      *
-     * @param RewardChoiceGroup        $group
+     * @param RewardChoiceGroup     $group
      * @param array                 $data
      * @param \App\Models\User\User $user
      *
@@ -71,7 +70,7 @@ class RewardChoiceService extends Service {
             $data = $this->populateRewardChoiceData($data, $group);
 
             $group->update($data);
-            
+
             $this->populateRewards(Arr::only($data, ['rewardable_type', 'rewardable_id', 'quantity']), $group);
 
             return $this->commitReturn($group);
@@ -108,40 +107,37 @@ class RewardChoiceService extends Service {
         return $this->rollbackReturn(false);
     }
 
-
     /**
      * Handle choice group data.
      *
-     * @param array               $data
+     * @param array                  $data
      * @param RewardChoiceGroup|null $group
      *
      * @return array
      */
     private function populateRewardChoiceData($data, $group = null) {
-
         return $data;
     }
 
     /**
      * Processes user input for creating/updating prompt rewards.
      *
-     * @param array  $data
+     * @param array             $data
      * @param RewardChoiceGroup $group
      */
     private function populateRewards($data, $group) {
         // Clear the old rewards...
         $group->choices()->delete();
-        
+
         if (isset($data['rewardable_type'])) {
             foreach ($data['rewardable_type'] as $key => $type) {
                 RewardChoices::create([
                     'choice_group_id'  => $group->id,
-                    'rewardable_type' => $type,
-                    'rewardable_id'   => $data['rewardable_id'][$key],
-                    'quantity'        => $data['quantity'][$key],
+                    'rewardable_type'  => $type,
+                    'rewardable_id'    => $data['rewardable_id'][$key],
+                    'quantity'         => $data['quantity'][$key],
                 ]);
             }
         }
     }
-
 }

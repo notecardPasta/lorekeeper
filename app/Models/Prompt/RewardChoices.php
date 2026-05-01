@@ -2,11 +2,7 @@
 
 namespace App\Models\Prompt;
 
-use App\Models\Currency\Currency;
-use App\Models\Item\Item;
-use App\Models\Loot\LootTable;
 use App\Models\Model;
-use App\Models\Raffle\Raffle;
 
 class RewardChoices extends Model {
     /**
@@ -61,5 +57,4 @@ class RewardChoices extends Model {
         RELATIONS
 
     **********************************************************************************************/
-
 }

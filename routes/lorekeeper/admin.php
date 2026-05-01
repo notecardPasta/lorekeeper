@@ -246,7 +246,7 @@ Route::group(['prefix' => 'data', 'namespace' => 'Data', 'middleware' => 'power:
     Route::post('reward-choices/create', 'RewardChoiceController@postCreateEditRewardChoice');
     Route::post('reward-choices/edit/{id?}', 'RewardChoiceController@postCreateEditRewardChoice');
     Route::post('reward-choices/delete/{id}', 'RewardChoiceController@postDeleteRewardChoice');
-    Route::post('reward-choices/sort', 'RewardChoiceController@postSortRewardChoice');    
+    Route::post('reward-choices/sort', 'RewardChoiceController@postSortRewardChoice');
 });
 
 // PAGES

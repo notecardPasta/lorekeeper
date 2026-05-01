@@ -14,7 +14,7 @@ class Prompt extends Model {
     protected $fillable = [
         'prompt_category_id', 'name', 'summary', 'description', 'parsed_description', 'is_active',
         'start_at', 'end_at', 'hide_before_start', 'hide_after_end', 'has_image', 'prefix',
-        'hide_submissions', 'staff_only', 'hash', 'reward_description'
+        'hide_submissions', 'staff_only', 'hash', 'reward_description',
     ];
 
     /**
@@ -40,13 +40,13 @@ class Prompt extends Model {
      * @var array
      */
     public static $createRules = [
-        'prompt_category_id' => 'nullable',
-        'name'               => 'required|unique:prompts|between:3,100',
-        'prefix'             => 'nullable|unique:prompts|between:2,10',
-        'summary'            => 'nullable',
-        'description'        => 'nullable',
-        'image'              => 'mimes:png',
-        'reward_description'        => 'nullable',        
+        'prompt_category_id'        => 'nullable',
+        'name'                      => 'required|unique:prompts|between:3,100',
+        'prefix'                    => 'nullable|unique:prompts|between:2,10',
+        'summary'                   => 'nullable',
+        'description'               => 'nullable',
+        'image'                     => 'mimes:png',
+        'reward_description'        => 'nullable',
     ];
 
     /**
@@ -55,13 +55,13 @@ class Prompt extends Model {
      * @var array
      */
     public static $updateRules = [
-        'prompt_category_id' => 'nullable',
-        'name'               => 'required|between:3,100',
-        'prefix'             => 'nullable|between:2,10',
-        'summary'            => 'nullable',
-        'description'        => 'nullable',
-        'image'              => 'mimes:png',
-        'reward_description'        => 'nullable',        
+        'prompt_category_id'        => 'nullable',
+        'name'                      => 'required|between:3,100',
+        'prefix'                    => 'nullable|between:2,10',
+        'summary'                   => 'nullable',
+        'description'               => 'nullable',
+        'image'                     => 'mimes:png',
+        'reward_description'        => 'nullable',
     ];
 
     /**********************************************************************************************

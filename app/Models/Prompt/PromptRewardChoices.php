@@ -2,12 +2,7 @@
 
 namespace App\Models\Prompt;
 
-use App\Models\Currency\Currency;
-use App\Models\Item\Item;
-use App\Models\Loot\LootTable;
 use App\Models\Model;
-use App\Models\Raffle\Raffle;
-use App\Models\Prompt\RewardChoiceGroup;
 
 class PromptRewardChoices extends Model {
     /**
@@ -16,7 +11,7 @@ class PromptRewardChoices extends Model {
      * @var array
      */
     protected $fillable = [
-        'prompt_id', 'reward_choice_group_id', 
+        'prompt_id', 'reward_choice_group_id',
     ];
 
     /**
