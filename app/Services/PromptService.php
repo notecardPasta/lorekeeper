@@ -212,6 +212,7 @@ class PromptService extends Service {
             $this->populateRewards(Arr::only($data, ['rewardable_type', 'rewardable_id', 'quantity']), $prompt);
 
             $this->populateRewardChoices(Arr::only($data, ['reward_choice_id']), $prompt);
+
             return $this->commitReturn($prompt);
         } catch (\Exception $e) {
             $this->setError('error', $e->getMessage());
@@ -270,6 +271,7 @@ class PromptService extends Service {
 
             $this->populateRewards(Arr::only($data, ['rewardable_type', 'rewardable_id', 'quantity']), $prompt);
             $this->populateRewardChoices(Arr::only($data, ['reward_choice_id']), $prompt);
+
             return $this->commitReturn($prompt);
         } catch (\Exception $e) {
             $this->setError('error', $e->getMessage());
@@ -393,7 +395,7 @@ class PromptService extends Service {
         }
     }
 
-        /**
+    /**
      * Processes user input for creating/updating prompt rewards.
      *
      * @param array  $data
@@ -406,7 +408,7 @@ class PromptService extends Service {
         if (isset($data['reward_choice_id'])) {
             foreach ($data['reward_choice_id'] as $key => $id) {
                 PromptRewardChoices::create([
-                    'prompt_id'       => $prompt->id,
+                    'prompt_id'              => $prompt->id,
                     'reward_choice_group_id' => $id,
                 ]);
             }
