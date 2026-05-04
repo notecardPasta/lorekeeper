@@ -85,10 +85,10 @@ class SubmissionManager extends Service {
 
             $submission->update([
                 'data' => json_encode([
-                    'user'          => Arr::only(getDataReadyAssets($userAssets), ['user_items', 'currencies']),
-                    'rewards'       => getDataReadyAssets($promptRewards),
-                    'reward_choice' => $data['reward_choice'] ?? null,
-                    'reward_recipient' => $data['reward_recipient'] ?? null,                    
+                    'user'             => Arr::only(getDataReadyAssets($userAssets), ['user_items', 'currencies']),
+                    'rewards'          => getDataReadyAssets($promptRewards),
+                    'reward_choice'    => $data['reward_choice'] ?? null,
+                    'reward_recipient' => $data['reward_recipient'] ?? null,
                 ]), // list of rewards and addons
             ]);
 
@@ -159,10 +159,10 @@ class SubmissionManager extends Service {
                 'updated_at'    => Carbon::now(),
                 'comments'      => $data['comments'],
                 'data'          => json_encode([
-                    'user'          => Arr::only(getDataReadyAssets($userAssets), ['user_items', 'currencies']),
-                    'rewards'       => getDataReadyAssets($promptRewards),
-                    'reward_choice' => $data['reward_choice'] ?? null,
-                    'reward_recipient' => $data['reward_recipient'] ?? null,                    
+                    'user'             => Arr::only(getDataReadyAssets($userAssets), ['user_items', 'currencies']),
+                    'rewards'          => getDataReadyAssets($promptRewards),
+                    'reward_choice'    => $data['reward_choice'] ?? null,
+                    'reward_recipient' => $data['reward_recipient'] ?? null,
                 ]), // list of rewards and addons
             ] + ($isClaim ? [] : ['prompt_id' => $prompt->id]));
 
@@ -221,10 +221,10 @@ class SubmissionManager extends Service {
                     'staff_id'              => $user->id,
                     'status'                => 'Draft',
                     'data'                  => json_encode([
-                        'user'          => $userAssets,
-                        'rewards'       => getDataReadyAssets($promptRewards),
-                        'reward_choice' => $data['reward_choice'] ?? null,
-                        'reward_recipient' => $data['reward_recipient'] ?? null,                       
+                        'user'             => $userAssets,
+                        'rewards'          => getDataReadyAssets($promptRewards),
+                        'reward_choice'    => $data['reward_choice'] ?? null,
+                        'reward_recipient' => $data['reward_recipient'] ?? null,
                     ]), // list of rewards and addons
                 ]);
 
@@ -239,10 +239,10 @@ class SubmissionManager extends Service {
                     'status'     => 'Draft',
                     'updated_at' => Carbon::now(),
                     'data'       => json_encode([
-                        'user'          => $userAssets,
-                        'rewards'       => getDataReadyAssets($promptRewards),
-                        'reward_choice' => $data['reward_choice'] ?? null,
-                        'reward_recipient' => $data['reward_recipient'] ?? null,                         
+                        'user'             => $userAssets,
+                        'rewards'          => getDataReadyAssets($promptRewards),
+                        'reward_choice'    => $data['reward_choice'] ?? null,
+                        'reward_recipient' => $data['reward_recipient'] ?? null,
                     ]), // list of rewards and addons
                 ]);
             }
@@ -505,10 +505,10 @@ class SubmissionManager extends Service {
                 'staff_id'              => $user->id,
                 'status'                => 'Approved',
                 'data'                  => json_encode([
-                    'user'          => $addonData,
-                    'rewards'       => getDataReadyAssets($rewards),
-                    'reward_choice' => $data['reward_choice'] ?? null,
-                    'reward_recipient' => $data['reward_recipient'] ?? null,                    
+                    'user'             => $addonData,
+                    'rewards'          => getDataReadyAssets($rewards),
+                    'reward_choice'    => $data['reward_choice'] ?? null,
+                    'reward_recipient' => $data['reward_recipient'] ?? null,
                 ]), // list of rewards
             ]);
 
