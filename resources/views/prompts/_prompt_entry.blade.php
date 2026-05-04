@@ -42,7 +42,7 @@
                     <div class="card-body">{!! $prompt->reward_description !!}</div>
                 </div>
             @endif
-            @if (!count($prompt->rewards))
+            @if (!count($prompt->rewards) && !count($prompt->reward_choices))
                 No rewards.
             @else
                 <table class="table table-sm">
@@ -59,6 +59,14 @@
                                 <td>{{ $reward->quantity }}</td>
                             </tr>
                         @endforeach
+                            
+                        @foreach ($prompt->reward_choices as $choice)
+                            <tr>
+                                <td>Choice: {!! $choice->group->name !!}</td>
+                                <td></td>
+                            </tr>
+                        @endforeach
+                    
                     </tbody>
                 </table>
             @endif

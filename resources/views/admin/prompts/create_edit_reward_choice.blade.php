@@ -36,7 +36,7 @@
     @if ($group->id)
         <h3>Group Loots</h3>
         <p>Every row here will be rewarded to the character! Note that currently loot tables are rolled on the <b>first character</b> themself, though I will be adding more functionality later. Loot that cannot be held in a character's inventory goes to
-            the <b>owner's</b> inventory, not the submitter's due to how LK's loot rewarding works atm.</b></p>
+            the <b>owner's</b> inventory, not the submitter's due to how LK's loot rewarding works atm. Adding currencies that characters cannot hold currently doesn't work directly in this page, you need to do it thru a loot table until I code in a toggle  </p>
 
         @include('widgets._loot_select', ['loots' => $group->choices, 'showLootTables' => true, 'showRaffles' => true])
     @endif

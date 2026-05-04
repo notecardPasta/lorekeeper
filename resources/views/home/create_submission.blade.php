@@ -95,11 +95,11 @@
                 @if (!$isClaim)
                     var $prompt = $('#prompt');
                     var $rewards = $('#rewards');
-
                     $prompt.selectize();
                     $prompt.on('change', function(e) {
                         $rewards.load('{{ url('submissions/new/prompt') }}/' + $(this).val());
-                    });
+                    });     
+                   $rewards.load('{{ url('submissions/new/prompt') }}/' + $prompt.val());               
                 @endif
 
                 $confirmButton.on('click', function(e) {
@@ -127,6 +127,7 @@
                     $submissionForm.attr('action', '{{ url()->current() }}/draft');
                     $submissionForm.submit();
                 });
+
             });
         </script>
     @endif

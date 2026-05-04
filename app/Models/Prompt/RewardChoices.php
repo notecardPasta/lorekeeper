@@ -26,15 +26,6 @@ class RewardChoices extends Model {
      * @var array
      */
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'rewards' => 'array',
-    ];
-
     public static $createRules = [
         'rewardable_type' => 'required',
         'rewardable_id'   => 'required',

@@ -9,6 +9,7 @@ use App\Models\Currency\Currency;
 use App\Models\Item\Item;
 use App\Models\Loot\LootTable;
 use App\Models\Prompt\Prompt;
+use App\Models\Prompt\RewardChoiceGroup;
 use App\Models\Raffle\Raffle;
 use App\Models\Submission\Submission;
 use App\Models\Submission\SubmissionCharacter;
@@ -86,6 +87,7 @@ class SubmissionManager extends Service {
                 'data' => json_encode([
                     'user'    => Arr::only(getDataReadyAssets($userAssets), ['user_items', 'currencies']),
                     'rewards' => getDataReadyAssets($promptRewards),
+                    'reward_choice' => $data['reward_choice'] ?? null,
                 ]), // list of rewards and addons
             ]);
 
@@ -158,6 +160,7 @@ class SubmissionManager extends Service {
                 'data'          => json_encode([
                     'user'          => Arr::only(getDataReadyAssets($userAssets), ['user_items', 'currencies']),
                     'rewards'       => getDataReadyAssets($promptRewards),
+                    'reward_choice' => $data['reward_choice'] ?? null,                    
                 ]), // list of rewards and addons
             ] + ($isClaim ? [] : ['prompt_id' => $prompt->id]));
 
@@ -218,6 +221,7 @@ class SubmissionManager extends Service {
                     'data'                  => json_encode([
                         'user'      => $userAssets,
                         'rewards'   => getDataReadyAssets($promptRewards),
+                    'reward_choice' => $data['reward_choice'] ?? null,                         
                     ]), // list of rewards and addons
                 ]);
 
@@ -234,6 +238,7 @@ class SubmissionManager extends Service {
                     'data'       => json_encode([
                         'user'      => $userAssets,
                         'rewards'   => getDataReadyAssets($promptRewards),
+                        'reward_choice' => $data['reward_choice'] ?? null,                        
                     ]), // list of rewards and addons
                 ]);
             }
@@ -393,6 +398,21 @@ class SubmissionManager extends Service {
                 $characters = [];
             }
 
+        // If a reward choice is selected, grab first character and attach rewards to that one
+                if ($data['reward_choice'] !== null && count($characters)) {
+            $firstChar = $characters->first()->id;
+            $choices = RewardChoiceGroup::where('id', $data['reward_choice'])->first()->choices()->get();
+            if (empty($data['character_rewardable_id'])){
+            $data['character_rewardable_id'] = [];
+            $data['character_rewardable_type'] = []; 
+            $data['character_rewardable_quantity'] = [];             
+            }
+            foreach ($choices as $choice){
+            $data['character_rewardable_id'][$firstChar][] = $choice->rewardable_id;
+            $data['character_rewardable_type'][$firstChar][] = $choice->rewardable_type; 
+            $data['character_rewardable_quantity'][$firstChar][] = $choice->quantity;
+            }     
+        }
             // Get the updated set of rewards
             $rewards = $this->processRewards($data, false, true);
 
