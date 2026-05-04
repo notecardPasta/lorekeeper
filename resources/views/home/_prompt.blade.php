@@ -79,10 +79,10 @@
         $('.choice-box').on('click', function(e) {
             console.log('haii');
             $('.selected-choice').text('');
-             $(this).find('.selected-choice').text('( Chosen! )');            
-            $('.choice-box').removeClass('alert-info');            
+            $(this).find('.selected-choice').text('( Chosen! )');
+            $('.choice-box').removeClass('alert-info');
             if (!$(this).hasClass('alert-info')) {
-                $(this).toggleClass('alert-info');                
+                $(this).toggleClass('alert-info');
             }
             var choice = $(this).data("choice");
             $('#rewardChoice').val(choice);
