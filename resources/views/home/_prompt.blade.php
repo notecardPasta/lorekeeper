@@ -84,7 +84,6 @@
         });
 
         $('.choice-box').on('click', function(e) {
-            console.log('haii');
             $('.selected-choice').text('');
             $(this).find('.selected-choice').text('( Chosen! )');
             $('.choice-box').removeClass('alert-info');

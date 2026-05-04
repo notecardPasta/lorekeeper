@@ -39,11 +39,7 @@
     {!! Form::textarea('comments', isset($submission->comments) ? $submission->comments : old('comments') ?? Request::get('comments'), ['class' => 'form-control']) !!}
 </div>
 
-@if ($submission->prompt_id)
-    <div class="mb-3">
-        @include('home._prompt', ['prompt' => $submission->prompt, 'staffView' => false])
-    </div>
-@endif
+
 
 <div class="card mb-3">
     <div class="card-header h2">
