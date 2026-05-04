@@ -51,7 +51,7 @@
                     <div class="col-sm">
                         <div class="choice-box card mb-3" data-choice="{!! $choice->group->id !!}">
                             <div class="card-body">
-                                <h4>{!! $choice->group->name !!} <span class="selected"></span></h4>
+                                <h4 style="display: inline;">{!! $choice->group->name !!}</h4> <span class="selected-choice"></span>
                                 {!! $choice->group->description !!}
                             </div>
                         </div>
@@ -78,9 +78,11 @@
 
         $('.choice-box').on('click', function(e) {
             console.log('haii');
-            $('.choice-box').removeClass('alert-info');
+            $('.selected-choice').text('');
+             $(this).find('.selected-choice').text('( Chosen! )');            
+            $('.choice-box').removeClass('alert-info');            
             if (!$(this).hasClass('alert-info')) {
-                $(this).toggleClass('alert-info');
+                $(this).toggleClass('alert-info');                
             }
             var choice = $(this).data("choice");
             $('#rewardChoice').val(choice);
