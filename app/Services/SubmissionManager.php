@@ -501,9 +501,9 @@ class SubmissionManager extends Service {
                 'staff_id'              => $user->id,
                 'status'                => 'Approved',
                 'data'                  => json_encode([
-                    'user'    => $addonData,
-                    'rewards' => getDataReadyAssets($rewards),
-                    'reward_choice' => $data['reward_choice'] ?? null,                    
+                    'user'          => $addonData,
+                    'rewards'       => getDataReadyAssets($rewards),
+                    'reward_choice' => $data['reward_choice'] ?? null,
                 ]), // list of rewards
             ]);
 
