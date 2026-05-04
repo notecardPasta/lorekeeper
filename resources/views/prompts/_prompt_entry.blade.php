@@ -59,14 +59,14 @@
                                 <td>{{ $reward->quantity }}</td>
                             </tr>
                         @endforeach
-                            
+
                         @foreach ($prompt->reward_choices as $choice)
                             <tr>
                                 <td>Choice: {!! $choice->group->name !!}</td>
                                 <td></td>
                             </tr>
                         @endforeach
-                    
+
                     </tbody>
                 </table>
             @endif

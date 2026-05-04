@@ -98,8 +98,8 @@
                     $prompt.selectize();
                     $prompt.on('change', function(e) {
                         $rewards.load('{{ url('submissions/new/prompt') }}/' + $(this).val());
-                    });     
-                   $rewards.load('{{ url('submissions/new/prompt') }}/' + $prompt.val());               
+                    });
+                    $rewards.load('{{ url('submissions/new/prompt') }}/' + $prompt.val());
                 @endif
 
                 $confirmButton.on('click', function(e) {

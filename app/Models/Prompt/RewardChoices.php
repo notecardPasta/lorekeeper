@@ -25,7 +25,6 @@ class RewardChoices extends Model {
      *
      * @var array
      */
-
     public static $createRules = [
         'rewardable_type' => 'required',
         'rewardable_id'   => 'required',
