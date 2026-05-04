@@ -79,6 +79,7 @@ class SubmissionController extends Controller {
             'tables'              => LootTable::orderBy('name')->pluck('name', 'id'),
             'raffles'             => Raffle::where('rolled_at', null)->where('is_active', 1)->orderBy('name')->pluck('name', 'id'),
             'count'               => Submission::where('prompt_id', $submission->prompt_id)->where('status', 'Approved')->where('user_id', $submission->user_id)->count(),
+            'characterOptions'      => Character::myo(0)->where('user_id', Auth::user()->id)->orderBy('name')->get()->pluck('fullName', 'id'),
         ] : []));
     }
 
@@ -152,7 +153,7 @@ class SubmissionController extends Controller {
      * @return \Illuminate\Http\RedirectResponse
      */
     public function postSubmission(Request $request, SubmissionManager $service, $id, $action) {
-        $data = $request->only(['slug',  'character_rewardable_quantity', 'character_rewardable_id',  'character_rewardable_type', 'character_currency_id', 'rewardable_type', 'rewardable_id', 'quantity', 'staff_comments', 'reward_choice']);
+        $data = $request->only(['slug',  'character_rewardable_quantity', 'character_rewardable_id',  'character_rewardable_type', 'character_currency_id', 'rewardable_type', 'rewardable_id', 'quantity', 'staff_comments', 'reward_choice', 'reward_recipient']);
         if ($action == 'reject' && $service->rejectSubmission($request->only(['staff_comments']) + ['id' => $id], Auth::user())) {
             flash('Submission rejected successfully.')->success();
         } elseif ($action == 'cancel' && $service->cancelSubmission($request->only(['staff_comments']) + ['id' => $id], Auth::user())) {

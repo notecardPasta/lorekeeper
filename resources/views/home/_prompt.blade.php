@@ -43,8 +43,7 @@
             Reward Choice
         </div>
         <div class="card-body">
-            <p>Choose from the following options, if applicable. Your chosen reward will be rolled on the first character
-                you attach, so make sure it's one you own!</p>
+            <p>Choose from the following options, if applicable. Your chosen reward will be rolled on the character you select.</p>
 
             <div class="row">
                 @foreach ($prompt->reward_choices as $choice)
@@ -60,6 +59,12 @@
 
                 {!! Form::hidden('reward_choice', null, ['id' => 'rewardChoice']) !!}
             </div>
+            <h4>Choose Recipient:</h4>
+            <div class="form-group">
+                        {!! Form::label('reward_recipient', 'Character (choose one you are using in the prompt!)') !!}
+                        {!! Form::select('reward_recipient', $characterOptions, $submission->data['reward_recipient'] ?? null, ['id' => 'characterList', 'class' => 'form-control character-code', 'placeholder' => 'Select Character']) !!}
+             </div>
+             
             <div class="text-right">
                 <a href="#" class="btn btn-danger mr-2" id="clearChoice">Clear Choice</a>
             </div>
@@ -73,8 +78,10 @@
             $('[data-choice=' + {{ $submission->data['reward_choice'] }} + ']').toggleClass('alert-info');
             $('#rewardChoice').val({{ $submission->data['reward_choice'] }});
         @endif
-
-
+       //NOTE: can change maxitems down here to allow multiple laterrrr
+            $('#characterList').selectize({
+                maxItems: 1
+            });
 
         $('.choice-box').on('click', function(e) {
             console.log('haii');

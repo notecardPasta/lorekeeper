@@ -88,6 +88,7 @@ class SubmissionManager extends Service {
                     'user'          => Arr::only(getDataReadyAssets($userAssets), ['user_items', 'currencies']),
                     'rewards'       => getDataReadyAssets($promptRewards),
                     'reward_choice' => $data['reward_choice'] ?? null,
+                    'reward_recipient' => $data['reward_recipient'] ?? null,                    
                 ]), // list of rewards and addons
             ]);
 
@@ -161,6 +162,7 @@ class SubmissionManager extends Service {
                     'user'          => Arr::only(getDataReadyAssets($userAssets), ['user_items', 'currencies']),
                     'rewards'       => getDataReadyAssets($promptRewards),
                     'reward_choice' => $data['reward_choice'] ?? null,
+                    'reward_recipient' => $data['reward_recipient'] ?? null,                    
                 ]), // list of rewards and addons
             ] + ($isClaim ? [] : ['prompt_id' => $prompt->id]));
 
@@ -222,6 +224,7 @@ class SubmissionManager extends Service {
                         'user'          => $userAssets,
                         'rewards'       => getDataReadyAssets($promptRewards),
                         'reward_choice' => $data['reward_choice'] ?? null,
+                        'reward_recipient' => $data['reward_recipient'] ?? null,                       
                     ]), // list of rewards and addons
                 ]);
 
@@ -239,6 +242,7 @@ class SubmissionManager extends Service {
                         'user'          => $userAssets,
                         'rewards'       => getDataReadyAssets($promptRewards),
                         'reward_choice' => $data['reward_choice'] ?? null,
+                        'reward_recipient' => $data['reward_recipient'] ?? null,                         
                     ]), // list of rewards and addons
                 ]);
             }
@@ -400,7 +404,7 @@ class SubmissionManager extends Service {
 
             // If a reward choice is selected, grab first character and attach rewards to that one
             if ($data['reward_choice'] !== null && count($characters)) {
-                $firstChar = $characters->first()->id;
+                $focusChar = $data['reward_recipient'];
                 $choices = RewardChoiceGroup::where('id', $data['reward_choice'])->first()->choices()->get();
                 if (empty($data['character_rewardable_id'])) {
                     $data['character_rewardable_id'] = [];
@@ -408,9 +412,9 @@ class SubmissionManager extends Service {
                     $data['character_rewardable_quantity'] = [];
                 }
                 foreach ($choices as $choice) {
-                    $data['character_rewardable_id'][$firstChar][] = $choice->rewardable_id;
-                    $data['character_rewardable_type'][$firstChar][] = $choice->rewardable_type;
-                    $data['character_rewardable_quantity'][$firstChar][] = $choice->quantity;
+                    $data['character_rewardable_id'][$focusChar][] = $choice->rewardable_id;
+                    $data['character_rewardable_type'][$focusChar][] = $choice->rewardable_type;
+                    $data['character_rewardable_quantity'][$focusChar][] = $choice->quantity;
                 }
             }
             // Get the updated set of rewards
@@ -504,6 +508,7 @@ class SubmissionManager extends Service {
                     'user'          => $addonData,
                     'rewards'       => getDataReadyAssets($rewards),
                     'reward_choice' => $data['reward_choice'] ?? null,
+                    'reward_recipient' => $data['reward_recipient'] ?? null,                    
                 ]), // list of rewards
             ]);
 
