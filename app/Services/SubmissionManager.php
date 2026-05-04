@@ -503,6 +503,7 @@ class SubmissionManager extends Service {
                 'data'                  => json_encode([
                     'user'    => $addonData,
                     'rewards' => getDataReadyAssets($rewards),
+                    'reward_choice' => $data['reward_choice'] ?? null,                    
                 ]), // list of rewards
             ]);
 

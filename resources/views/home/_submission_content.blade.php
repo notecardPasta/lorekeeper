@@ -95,6 +95,28 @@
     </div>
 @endif
 
+@if(!empty($submission->data['reward_choice']))
+    <div class="card mb-3">
+        <div class="card-header h2">Reward Choice</div>
+        <div class="card-body">
+        <div class="row">
+            @foreach ($submission->prompt->reward_choices as $choice)
+                <div class="col-sm">
+                    <div class="choice-box card mb-3 @if($choice->reward_choice_group_id == $submission->data['reward_choice']) alert-info @endif">
+                        <div class="card-body">
+                            <h4>{!! $choice->group->name !!}
+                            @if($choice->reward_choice_group_id == $submission->data['reward_choice']) (Chosen!)@endif</h4>
+                            {!!   $choice->group->description !!}
+                        </div>
+                    </div>
+                                </div>
+            
+            @endforeach 
+        </div>
+        </div>
+    </div>
+@endif
+
 <div class="card mb-3">
     <div class="card-header h2">Characters</div>
     <div class="card-body">
