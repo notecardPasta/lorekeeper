@@ -223,8 +223,8 @@ class SubmissionManager extends Service {
                     'data'                  => json_encode([
                         'user'             => $userAssets,
                         'rewards'          => getDataReadyAssets($promptRewards),
-                        'reward_choice'    => $data['reward_choice'] ?? null,
-                        'reward_recipient' => $data['reward_recipient'] ?? null,
+                    'reward_choice'    => $data['reward_choice'] ?? null,
+                    'reward_recipient' => $data['reward_recipient'] ?? null,                        
                     ]), // list of rewards and addons
                 ]);
 
@@ -241,8 +241,8 @@ class SubmissionManager extends Service {
                     'data'       => json_encode([
                         'user'             => $userAssets,
                         'rewards'          => getDataReadyAssets($promptRewards),
-                        'reward_choice'    => $data['reward_choice'] ?? null,
-                        'reward_recipient' => $data['reward_recipient'] ?? null,
+                        'reward_choice'    => $submission->data['reward_choice'] ?? null,
+                        'reward_recipient' => $submission->data['reward_recipient'] ?? null,                        
                     ]), // list of rewards and addons
                 ]);
             }
