@@ -122,7 +122,6 @@ class SubmissionController extends Controller {
         return view('home.edit_submission', [
             'closed'              => $closed,
             'isClaim'             => false,
-            'submission'          => $submission,
         ] + ($closed ? [] : [
             'submission'            => $submission,
             'prompts'               => Prompt::active()->sortAlphabetical()->pluck('name', 'id')->toArray(),
