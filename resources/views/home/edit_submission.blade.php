@@ -121,7 +121,7 @@
                 @if (!$isClaim)
                     var $prompt = $('#prompt');
                     var $rewards = $('#rewards');
-                    var draft = '{{$submission->id ? "/".$submission->id : null}}';
+                    var draft = '{{ $submission->id ? '/' . $submission->id : null }}';
                     $prompt.selectize();
                     $prompt.on('change', function(e) {
                         $rewards.load('{{ url('submissions/new/prompt') }}/' + $(this).val());
