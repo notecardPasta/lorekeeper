@@ -64,6 +64,12 @@ class SubmissionController extends Controller {
             abort(404);
         }
 
+        if (isset($submission->data['reward_recipient'])) {
+            $chosen = Character::where('id', $submission->data['reward_recipient'])->first();
+        } else {
+            $chosen = null;
+        }
+        
         return view('admin.submissions.submission', [
             'submission'       => $submission,
             'inventory'        => $inventory,
@@ -79,7 +85,7 @@ class SubmissionController extends Controller {
             'tables'                => LootTable::orderBy('name')->pluck('name', 'id'),
             'raffles'               => Raffle::where('rolled_at', null)->where('is_active', 1)->orderBy('name')->pluck('name', 'id'),
             'count'                 => Submission::where('prompt_id', $submission->prompt_id)->where('status', 'Approved')->where('user_id', $submission->user_id)->count(),
-            'characterOptions'      => Character::myo(0)->where('user_id', Auth::user()->id)->orderBy('name')->get()->pluck('fullName', 'id'),
+            'characterOptions'      => Character::myo(0)->orderBy('name')->get()->pluck('fullName', 'id'),
         ] : []));
     }
 

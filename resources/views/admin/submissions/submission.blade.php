@@ -270,7 +270,7 @@
         </div>
     @else
         <div class="alert alert-danger">This {{ $submission->prompt_id ? 'submission' : 'claim' }} has already been processed.</div>
-        @include('home._submission_content', ['submission' => $submission])
+        @include('home._submission_content', ['submission' => $submission, 'rewardRecipient' => $rewardRecipient ?? null])
     @endif
 
 @endsection

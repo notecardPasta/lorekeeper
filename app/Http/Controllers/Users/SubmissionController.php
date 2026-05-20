@@ -63,6 +63,11 @@ class SubmissionController extends Controller {
     public function getSubmission($id) {
         $submission = Submission::viewable(Auth::user())->where('id', $id)->whereNotNull('prompt_id')->first();
         $inventory = isset($submission->data['user']) ? parseAssetData($submission->data['user']) : null;
+        if (isset($submission->data['reward_recipient'])) {
+            $chosen = Character::where('id', $submission->data['reward_recipient'])->first();
+        } else {
+            $chosen = null;
+        }        
         if (!$submission) {
             abort(404);
         }
@@ -74,6 +79,7 @@ class SubmissionController extends Controller {
             'inventory'  => $inventory,
             'itemsrow'   => Item::all()->keyBy('id'),
             'isClaim'    => false,
+            'rewardRecipient' => $chosen,            
         ]);
     }
 
@@ -159,19 +165,27 @@ class SubmissionController extends Controller {
      * Shows prompt information.
      *
      * @param int $id
+     * @param int $submission 
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function getPromptInfo($id) {
+    public function getPromptInfo($id, $draft = null) {
         $prompt = Prompt::active()->where('id', $id)->first();
         if (!$prompt) {
             return response(404);
+        }
+
+        if ($draft) {
+            $submission = Submission::where('id', $draft)->first();
+        } else {
+            $submission = null;
         }
 
         return view('home._prompt', [
             'prompt'                => $prompt,
             'count'                 => Submission::where('prompt_id', $id)->where('status', 'Approved')->where('user_id', Auth::user()->id)->count(),
             'characterOptions'      => Character::myo(0)->where('user_id', Auth::user()->id)->orderBy('name')->get()->pluck('fullName', 'id'),
+            'submission'            => $submission,            
         ]);
     }
 
