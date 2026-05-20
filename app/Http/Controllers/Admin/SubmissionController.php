@@ -69,7 +69,7 @@ class SubmissionController extends Controller {
         } else {
             $chosen = null;
         }
-        
+
         return view('admin.submissions.submission', [
             'submission'       => $submission,
             'inventory'        => $inventory,

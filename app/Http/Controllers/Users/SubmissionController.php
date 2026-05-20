@@ -67,19 +67,19 @@ class SubmissionController extends Controller {
             $chosen = Character::where('id', $submission->data['reward_recipient'])->first();
         } else {
             $chosen = null;
-        }        
+        }
         if (!$submission) {
             abort(404);
         }
 
         return view('home.submission', [
-            'submission' => $submission,
-            'user'       => $submission->user,
-            'categories' => ItemCategory::orderBy('sort', 'DESC')->get(),
-            'inventory'  => $inventory,
-            'itemsrow'   => Item::all()->keyBy('id'),
-            'isClaim'    => false,
-            'rewardRecipient' => $chosen,            
+            'submission'      => $submission,
+            'user'            => $submission->user,
+            'categories'      => ItemCategory::orderBy('sort', 'DESC')->get(),
+            'inventory'       => $inventory,
+            'itemsrow'        => Item::all()->keyBy('id'),
+            'isClaim'         => false,
+            'rewardRecipient' => $chosen,
         ]);
     }
 
@@ -164,8 +164,8 @@ class SubmissionController extends Controller {
     /**
      * Shows prompt information.
      *
-     * @param int $id
-     * @param int $submission 
+     * @param int        $id
+     * @param mixed|null $draft
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
@@ -185,7 +185,7 @@ class SubmissionController extends Controller {
             'prompt'                => $prompt,
             'count'                 => Submission::where('prompt_id', $id)->where('status', 'Approved')->where('user_id', Auth::user()->id)->count(),
             'characterOptions'      => Character::myo(0)->where('user_id', Auth::user()->id)->orderBy('name')->get()->pluck('fullName', 'id'),
-            'submission'            => $submission,            
+            'submission'            => $submission,
         ]);
     }
 
